@@ -1,7 +1,6 @@
 name: Build Flutter APK
 on:
-  push:
-    branches: [ main ]
+  workflow_dispatch:
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -28,6 +27,13 @@ jobs:
             find extracted -name "pubspec.yaml"
             exit 1
           fi
+          echo "=== pubspec.yaml ==="
+          cat pubspec.yaml | head -8
+
+      - name: Info build environment
+        run: |
+          echo "Gradle version:" && gradle --version || true
+          echo "Flutter version:" && flutter --version
 
       - name: Setup Flutter 3.29.3
         uses: subosito/flutter-action@v2
